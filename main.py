@@ -4,7 +4,7 @@ import threading as td
 import time
 import tkinter as tk
 from win10toast import ToastNotifier
-
+from tkinter import filedialog
 import psutil
 
 toaster = ToastNotifier()
@@ -18,7 +18,7 @@ else:
 
 stop_threads = False
 root = tk.Tk()
-root.title(f"Jani Code - {last}")
+root.title(f"Jani Code - {os.path.basename(last)}")
 root.configure(background='white')
 
 
@@ -85,11 +85,15 @@ def idk():
 def file_menu():
     global files
     global save_py
+    global open_file
     save_py = tk.Button(root, text="Save as .py", height=1, width=10, command=py)
-    save_py.place(x=0, y=25)
+    save_py.place(x=0, y=50)
+    open_file = tk.Button(root, text="Open file", height=1, width=10, command=open_saved)
+    open_file.place(x=0, y=25)
     button1.place_forget()
     files = tk.Button(root, text="File", height=1, width=10, command=file_close)
     files.place(x=0, y=0)
+
 
 
 def py():
@@ -99,6 +103,17 @@ def py():
     name.place(x=75, width=300, y=250)
     button4 = tk.Button(root, text="Save", height=1, width=10, command=py_save)
     button4.place(y=247, x=375)
+
+
+def open_saved():
+    code_file = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("all files", "*.*"),("files","")))
+    file = open(code_file)
+    insert_code = file.read()
+    file.close()
+    code.insert(1.0, chars=insert_code)
+    file = open("last.txt","w")
+    file.write(code_file)
+    file.close()
 
 
 def py_save():
@@ -116,6 +131,7 @@ def py_save():
 def file_close():
     files.place_forget()
     save_py.place_forget()
+    open_file.place_forget()
     button1.place(x=0, y=0)
     try:
         button4.place_forget()
