@@ -18,7 +18,7 @@ else:
 
 stop_threads = False
 root = tk.Tk()
-root.title(f"Jani Code - {os.path.basename(last)}")
+root.title(f"Code Editor - {os.path.basename(last)}")
 root.configure(background='white')
 
 
@@ -86,7 +86,7 @@ def file_menu():
     global files
     global save_py
     global open_file
-    save_py = tk.Button(root, text="Save as .py", height=1, width=10, command=py)
+    save_py = tk.Button(root, text="Save as", height=1, width=10, command=py)
     save_py.place(x=0, y=50)
     open_file = tk.Button(root, text="Open file", height=1, width=10, command=open_saved)
     open_file.place(x=0, y=25)
@@ -101,7 +101,7 @@ def py():
     global button4
     name = tk.Entry(root, border=2)
     name.place(x=75, width=300, y=250)
-    button4 = tk.Button(root, text="Save", height=1, width=10, command=py_save)
+    button4 = tk.Button(root, text="Save as", height=1, width=10, command=py_save)
     button4.place(y=247, x=375)
 
 
@@ -118,14 +118,14 @@ def open_saved():
 
 def py_save():
     global last
-    file = open(f"{name.get()}.py", "w")
+    file = open(f"{name.get()}", "w")
     file.write(code.get(1.0, "end-1c"))
     file.close()
-    root.title(f"Jani Code - {name.get()}.py")
+    root.title(f"Code Editor - {name.get()}")
     file = open("last.txt", "w")
-    file.write(f"{name.get()}.py")
+    file.write(f"{name.get()}")
     file.close()
-    last = f"{name.get()}.py"
+    last = f"{name.get()}"
 
 
 def file_close():
